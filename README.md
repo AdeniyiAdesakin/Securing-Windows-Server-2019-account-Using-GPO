@@ -26,7 +26,7 @@
 <p>3. This opens open a New GPO screen, input a descriptive name. We can name it: "Enhanced Security Policy-Account"</p>
 <p align="center"><img src="https://i.imgur.com/axSiANO.png" height="50%" width="50%" alt="image"/>
 
-<h3>Now Apply the following three policies to secure windows server 2019 using GPO</h3>
+<h3>Applying the following policies to secure windows server 2019 using GPO</h3>
 <h3>*Deny log on through Remote Desktop Services</h3>
 <p>1. Right-click on the newly created GPO and click on Edit</p>
 <p align="center"><img src="https://i.imgur.com/3LEEdHS.png" height="50%" width="50%" alt="image"/>
