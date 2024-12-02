@@ -9,7 +9,7 @@
 
 <br>
 
-<h3>*Summary of the Steps</h3>
+<h2>*Summary of the Steps</h2>
 <p> - Create and Configure a GPO</p>
 <p> - Link the GPO</p>
 <p> - Test all the Policies</p>
@@ -87,10 +87,86 @@
 <br>
 
 <h3>*Link the GPO</h3>
-<p>1. </p>
+<p>For all the policy configured via GPO to work, the GPO needs to be linked to an OU</p>
+<p>1. First, we need to create an OU. From the Active Directory Users and Computers, right-click on the domain, go to New and click on Organizational Unit</p>
+<p align="center"><img src="https://imgur.com/a/zHYv8N6" height="50%" width="50%" alt="image"/>
+
+<p>2. We are going to name this OU, “Servers”, after then click OK</p>
+<p align="center"><img src="https://i.imgur.com/mlsLBzu.png" height="50%" width="50%" alt="image"/>
+
+<p>3. Since we are applying this policy to a certain computer, we need to move this computer into the OU we created. To move the particular computer, we click on computer container in Active Directory Users and Computers, right-click on the  computer, then click on move</p>
+<p align="center"><img src="https://i.imgur.com/QAA75Dd.png" height="50%" width="50%" alt="image"/>
+
+<p>4. On the move object into container page, select the OU and click OK</p>
+<p align="center"><img src="https://i.imgur.com/0tjjliV.png" height="50%" width="50%" alt="image"/>
+
+<p>5. After double-clicking the OU, the selected computer is now shown there.</p>
+<p align="center"><img src="https://i.imgur.com/9wj9v88.png" height="50%" width="50%" alt="image"/>
+
+<p>6. Finally, to link, right click on the OU(Servers) and click on Link an existing GPO</p>
+<p align="center"><img src="https://i.imgur.com/Oj2UPNd.png" height="50%" width="50%" alt="image"/>
+
+<p>7. On the Select GPO page, select the GPO where all the policies are configured and click OK</p>
+<p align="center"><img src="https://i.imgur.com/1XKMQJ5.png" height="50%" width="50%" alt="image"/>
+
+<p>8. Back on the Group Policy Management, the linked policy is shown with the OU(servers)</p>
+<p align="center"><img src="https://i.imgur.com/GEQ7c9K.png" height="50%" width="50%" alt="image"/>
+
+<p>9. After this is done, a gpupdate /force command in Powershell is necessary to force these updates. </p>
+<p align="center"><img src="https://i.imgur.com/NEVmWp0.png" height="50%" width="50%" alt="image"/>
+
+<br>
+
+<h3>*Testing all the policies</h3>
+<h3>- Test Restrict Logon Access </h3>
+<p>1. <b>Before the policy is applied</b> - First on MS1, I allowed remote connection by clicking on File folder>This PC>Properties>Remote Settings>Remote tab, then checking the “Allow remote connections to this computer” option. After that, clicked Apply and OK</p>
+<p align="center"><img src="https://i.imgur.com/0veeOBA.png" height="50%" width="50%" alt="image"/>
+
+<p>2. To test the initial access, I searched for Remote Desktop Connection on the ADDS Server, then double click in when the best match came up </p>
+<p align="center"><img src="https://i.imgur.com/7ps2Edc.png" height="50%" width="50%" alt="image"/>
+
+<p>3. On the Remote Desktop Connection page, I typed in the IP address of the computer I need to access remotely.</p>
+<p align="center"><img src="https://i.imgur.com/SuLvnqi.png" height="50%" width="50%" alt="image"/>
+
+<p>4. On the Windows Security page, I typed in the administrator password then click OK</p>
+<p align="center"><img src="https://i.imgur.com/f2z2Nvy.png" height="50%" width="50%" alt="image"/>
+
+<p>5. After a prompt which I typed yes, I was able to log in to the computer remotely</p>
+<p align="center"><img src="https://i.imgur.com/mOxkvNT.png" height="50%" width="50%" alt="image"/>
+
+<p>6 <b>After the policy is applied </b>- After applying the policy, I tried to login again</p>
+<p align="center"><img src="https://i.imgur.com/xfexceL.png" height="50%" width="50%" alt="image"/>
+
+<p>7. Supplied the administrator password, then click OK</p>
+<p align="center"><img src="https://i.imgur.com/f2z2Nvy.png" height="50%" width="50%" alt="image"/>
+
+<p>8. After a prompt, which I said yes, I was not allowed to access that computer remotely. The error message I got reads <b><i>“Logon failure:the user has not been granted the requested logon type at this computer”</i></b></p>
+<p align="center"><img src="https://i.imgur.com/bGryyop.png" height="50%" width="50%" alt="image"/>
+
+<br>
+
+<h3>*Test Password Policies</h3>
+<p>1. To test the password policy, I went on the Member server computer, go to Setting>Accounts then Sign In Options. Clicked Change Password</p>
+<p align="center"><img src="https://i.imgur.com/gVddhRp.png" height="50%" width="50%" alt="image"/>
+
+<p>2. Entered the current password</p>
+<p align="center"><img src="https://i.imgur.com/nLRDQaN.png" height="50%" width="50%" alt="image"/>
+
+<p>3. On the next page, I entered the new password with the same length as the old one, re-enter the new password and the password hint, then click Next</p>
+<p align="center"><img src="https://i.imgur.com/serQrAT.png" height="50%" width="50%" alt="image"/>
+
+<p>4. On the next page, click Finish</p>
+<p align="center"><img src="https://i.imgur.com/dqeDm8T.png" height="50%" width="50%" alt="image"/>
+
+<p>5. I received an error message which reads <b><i>“The password you entered doesn’t meet the password policy requirements. Try one that’s longer or more complex".</i></b></p>
+<p align="center"><img src="https://i.imgur.com/wbf6Eu1.png" height="50%" width="50%" alt="image"/>
+
+<p>6. Then I entered another password that is more than 14 characters as required by the policy created.</p>
+<p align="center"><img src="https://i.imgur.com/Ulc6seu.png" height="50%" width="50%" alt="image"/>
+
+<p>7. Next page, I clicked Finish, it accepted and there was no error message.</p>
+<p align="center"><img src="https://i.imgur.com/kMw49Vr.png" height="50%" width="50%" alt="image"/>
+
+<br>
 
 
-
-
-
-<p align="center"><img src="" height="50%" width="50%" alt="image"/>
