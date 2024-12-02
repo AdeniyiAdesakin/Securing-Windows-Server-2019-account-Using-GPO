@@ -1,5 +1,5 @@
 <h1>Securing Windows Server 2019 account Using GPO</h1>
-<p>Securing Windows Server involves a combination of configuring settings, applying best practices, and implementing tools and technologies to protect against various threats. This project is going to cover some security implementations </p>
+<p>Securing Windows Server involves a combination of configuring settings, applying best practices, and implementing tools and technologies to protect against various threats. This project is going to cover some security implementations. In this project, I will be applying three GPO policies to secure Windows server (MS1) account  </p>
 
 <h2>*Prerequisites</h2>
 <p>- Windows Server 2019 with Active Directory Domain Services (ADDS)</p>
@@ -15,7 +15,7 @@
 <p> - Test all the Policies</p>
 
 <br>
-
+<h2>Creating and Configuring a GPO</h2>
 <h3>*Restrict Logon Access - Deny log on through Remote Desktop Services</h3>
 <p>1. To start securing Windows server 2019 using GPO, first we need to create a GPO in this domain to that effect. To create a GPO, from the server manager -dashboard, click on Tool and go to Group Policy Management.</p>
 <p align="center"><img src="https://i.imgur.com/iyTMety.png" height="50%" width="50%" alt="image"/>
@@ -75,7 +75,7 @@
 
 <h3>*Audit Policies</h3>
 <p>Audit policies are settings that define which events, such as login attempts or file accesses, are logged and monitored to track user activity and ensure security compliance</p>
-<p>1. Assuming you already right-clicked on the GPO, clicked on Edit and this has opened up the Group Policy Management Editor page. Go to this path to configure the password policy; <b><i> Computer Configuration → Policies → Windows Settings → Security Settings → Advanced Audit Policy Configuration → Audit Policies → Logon/Logoff→ Audit Logon. Then double-click on Audit Logon to open it</i></b>.
+<p>1. Assuming you already right-clicked on the GPO, clicked on Edit and this has opened up the Group Policy Management Editor page. Go to this path to configure the password policy; <b><i> Computer Configuration → Policies → Windows Settings → Security Settings → Advanced Audit Policy Configuration → Audit Policies → Logon/Logoff→ Audit Logon</i></b>. Then double-click on Audit Logon to open it.</p>
 <p align="center"><img src="https://i.imgur.com/WzfDhVh.png" height="50%" width="50%" alt="image"/>
 
 <p>2. On the Audit Logon properties’ page, click the Configure the following audit events, then select success and failure. After this is done, click Apply then OK</p>
@@ -86,10 +86,10 @@
 
 <br>
 
-<h3>*Link the GPO</h3>
+<h2>Link the GPO</h2>
 <p>For all the policy configured via GPO to work, the GPO needs to be linked to an OU</p>
 <p>1. First, we need to create an OU. From the Active Directory Users and Computers, right-click on the domain, go to New and click on Organizational Unit</p>
-<p align="center"><img src="https://imgur.com/a/zHYv8N6" height="50%" width="50%" alt="image"/>
+<p align="center"><img src="https://i.imgur.com/Zwb5JRG.png" height="50%" width="50%" alt="image"/>
 
 <p>2. We are going to name this OU, “Servers”, after then click OK</p>
 <p align="center"><img src="https://i.imgur.com/mlsLBzu.png" height="50%" width="50%" alt="image"/>
@@ -117,8 +117,8 @@
 
 <br>
 
-<h3>*Testing all the policies</h3>
-<h3>- Test Restrict Logon Access </h3>
+<h2>Testing all the policies</h2>
+<h3>* Test Restrict Logon Access </h3>
 <p>1. <b>Before the policy is applied</b> - First on MS1, I allowed remote connection by clicking on File folder>This PC>Properties>Remote Settings>Remote tab, then checking the “Allow remote connections to this computer” option. After that, clicked Apply and OK</p>
 <p align="center"><img src="https://i.imgur.com/0veeOBA.png" height="50%" width="50%" alt="image"/>
 
